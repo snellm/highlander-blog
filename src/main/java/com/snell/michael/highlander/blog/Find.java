@@ -1,6 +1,10 @@
 package com.snell.michael.highlander.blog;
 
+import com.google.common.base.Predicate;
+
 import java.util.Collection;
+
+import static com.google.common.collect.Collections2.filter;
 
 public class Find {
     public Person findNaive(String email, Collection<Person> people) {
@@ -34,5 +38,26 @@ public class Find {
         return people.stream()
             .filter(p -> email.equalsIgnoreCase(p.getEmail()))
             .findFirst().get();
+    }
+
+    public Person findOnlyGuava(String email, Collection<Person> people) {
+        return filter(people, hasEmail(email))
+            .iterator()
+            .next();
+    }
+
+    public Person findOnlyStream(String email, Collection<Person> people) {
+        return people.stream()
+            .filter(p -> email.equalsIgnoreCase(p.getEmail()))
+            .collect(only);
+    }
+
+    private Predicate<Person> hasEmail(String email) {
+        return new Predicate<Person>() {
+            @Override
+            public boolean apply(Person person) {
+                return email.equalsIgnoreCase(person.getEmail());
+            }
+        };
     }
 }
