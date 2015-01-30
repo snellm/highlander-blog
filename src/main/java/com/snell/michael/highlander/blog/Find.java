@@ -5,6 +5,7 @@ import com.google.common.base.Predicate;
 import java.util.Collection;
 
 import static com.google.common.collect.Collections2.filter;
+import static com.snell.michael.highlander.Highlander.only;
 
 public class Find {
     public Person findNaive(String email, Collection<Person> people) {
@@ -41,19 +42,16 @@ public class Find {
     }
 
     public Person findOnlyGuava(String email, Collection<Person> people) {
-        return only(filter(people, hasEmail(email)));
-    }
-
-    public Person findOnlyStream(String email, Collection<Person> people) {
-        return only(people.stream().filter(p -> email.equalsIgnoreCase(p.getEmail())));
-    }
-
-    private Predicate<Person> hasEmail(String email) {
-        return new Predicate<Person>() {
-            @Override
+        return only(filter(people, new Predicate<Person>() {
             public boolean apply(Person person) {
                 return email.equalsIgnoreCase(person.getEmail());
             }
-        };
+        }));
+    }
+
+    public Person findOnlyStream(String email, Collection<Person> people) {
+        return people.stream()
+            .filter(p -> email.equalsIgnoreCase(p.getEmail()))
+            .collect(only());
     }
 }

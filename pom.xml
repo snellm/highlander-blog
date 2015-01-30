@@ -4,7 +4,7 @@
     <artifactId>highlander-blog</artifactId>
     <packaging>jar</packaging>
     <version>0.1-SNAPSHOT</version>
-    <name>highlander-blog</name>
+    <name>com.snell.michael.highlander-blog</name>
 
     <build>
         <plugins>
