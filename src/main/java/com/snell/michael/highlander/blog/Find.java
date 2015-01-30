@@ -29,4 +29,10 @@ public class Find {
             return found;
         }
     }
+
+    public Person findStream(String email, Collection<Person> people) {
+        return people.stream()
+            .filter(p -> email.equalsIgnoreCase(p.getEmail()))
+            .findFirst().get();
+    }
 }
