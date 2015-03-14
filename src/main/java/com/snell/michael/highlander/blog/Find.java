@@ -50,8 +50,6 @@ public class Find {
     }
 
     public Person findOnlyStream(String email, Collection<Person> people) {
-        return people.stream()
-            .filter(p -> email.equalsIgnoreCase(p.getEmail()))
-            .collect(only());
+        return only(people.stream().filter(p -> email.equalsIgnoreCase(p.getEmail())));
     }
 }
